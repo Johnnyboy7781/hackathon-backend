@@ -23,7 +23,7 @@ public class HelloworldApplication {
     @GetMapping("/")
     public String hello() {
         var idList = testRepo.findAll();
-        System.out.println(idList);
+        System.out.println(idList.get(0).id);
         return String.format("Hello world from Java Spring Boot!");
     }
 

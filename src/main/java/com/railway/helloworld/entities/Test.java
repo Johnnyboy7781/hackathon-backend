@@ -7,5 +7,5 @@ import jakarta.persistence.*;
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 }
