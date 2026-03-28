@@ -3,7 +3,7 @@ package com.byrdparkgeese.hackathonbackend.data.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Conversations")
+@Table(name = "conversations")
 public class ConversationsEntity {
 
     @Id
