@@ -67,16 +67,13 @@ public class TextHookController {
         }
 
         GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(res.address());
-        conversations.setUsers_id(usersEntity.id);
         conversations.setStatus("Closed");
-        conversations.setAddress(res.address());
         conversations.setLatitude(
                 String.valueOf(geocodingResponse.features().get(0).properties().lat())
         );
         conversations.setLongitude(
                 String.valueOf(geocodingResponse.features().get(0).properties().lon())
         );
-        conversations.setIssueDesc(res.issueDescription());
         conversationsRepository.save(conversations);
 
         GetReportsData reportsData = rva311Service.getReportWithRadius(
