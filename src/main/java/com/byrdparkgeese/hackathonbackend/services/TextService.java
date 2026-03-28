@@ -19,11 +19,10 @@ public class TextService {
     @Value("${textbee.api_key}")
     private String textBeeApiKey;
 
-    String textBeeUrl = "https://api.textbee.dev/api/v1/gateway/devices/69c73b4c5763e875d5d00315/send-sms";
-    
+    private String textBeeUrl = "https://api.textbee.dev/api/v1/gateway/devices/69c73b4c5763e875d5d00315/send-sms";
+
     public void sendText(String recipientNumber, String message) {
         var requestHeaders = new HttpHeaders();
-        System.out.println(textBeeApiKey);
         requestHeaders.add("x-api-key", textBeeApiKey);
 
         var requestBody = new TextSendRequestBody(
@@ -33,12 +32,17 @@ public class TextService {
 
         var httpEntity = new HttpEntity<Object>(requestBody, requestHeaders);
 
-        restTemplate.exchange(
-            textBeeUrl,
-            HttpMethod.POST,
-            httpEntity,
-            Object.class
-        );
+        try {
+            restTemplate.exchange(
+                textBeeUrl,
+                HttpMethod.POST,
+                httpEntity,
+                Object.class
+            );
+        } catch(RuntimeException err) {
+            System.out.println("Failed to send message: {}".formatted(err.getMessage()));
+            err.printStackTrace();
+        }
     }
 
 }
