@@ -11,6 +11,6 @@ public interface ConversationsRepository extends JpaRepository<ConversationsEnti
 
     Optional<ConversationsEntity> findByStatus(String status);
 
-    Optional<ConversationsEntity> findByUserIdAndStatus(long id, String status);
+    Optional<ConversationsEntity> findByUsersIdAndStatus(long id, String status);
 
 }
