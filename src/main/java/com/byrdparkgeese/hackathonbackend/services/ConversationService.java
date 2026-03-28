@@ -2,8 +2,6 @@ package com.byrdparkgeese.hackathonbackend.services;
 
 import com.byrdparkgeese.hackathonbackend.data.entities.ConversationsEntity;
 import com.byrdparkgeese.hackathonbackend.data.entities.UsersEntity;
-import com.byrdparkgeese.hackathonbackend.data.records.ChatGptResponse;
-import com.byrdparkgeese.hackathonbackend.data.records.TextMessageData;
 import com.byrdparkgeese.hackathonbackend.data.repositories.ConversationsRepository;
 import com.byrdparkgeese.hackathonbackend.data.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,7 @@ public class ConversationService {
         return user;
     }
 
-    public ConversationsEntity loadConversation(String status){
+    public ConversationsEntity loadOrCreateConversation(String status){
         ConversationsEntity conversations;
         Optional<ConversationsEntity> foundConvo = conversationsRepository.findByStatus(status);
 
