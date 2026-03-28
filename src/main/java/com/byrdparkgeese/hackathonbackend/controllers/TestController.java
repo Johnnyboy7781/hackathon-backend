@@ -41,7 +41,7 @@ public class TestController {
                 "8041234567",
                 null
         );
-        return aiService.callAiToGatherInitialInfo(TextMessageData , "");
+        return aiService.callAiToGatherInitialInfo(TextMessageData);
     }
 
 }
