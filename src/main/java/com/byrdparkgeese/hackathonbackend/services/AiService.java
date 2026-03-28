@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +16,7 @@ import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.F
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Properties;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Properties.Property;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptResponse;
+import com.byrdparkgeese.hackathonbackend.data.Constants;
 
 @Service
 public class AiService {
@@ -34,7 +34,7 @@ public class AiService {
         requestHeaders.add("Authorization", "Bearer %s".formatted(chatgptApiKey));
         requestHeaders.add("Content-Type", "application/json");
 
-        Message systemInput = new Message("system",  "Extract the address and issue description. If you cannot extract an address, add a reply to the user telling them that you need an address. Act as a public servant and be very nice.");
+        Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS);
         Message userInput = new Message("user", message);
 
         var requestBody = new ChatGptRequestBody(
