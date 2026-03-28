@@ -11,7 +11,7 @@ public class ConversationsEntity {
     public long id;
 
     @JoinColumn(name="users_id")
-    public long users_id;
+    public long usersId;
 
     @Column(name="status", length = 10)
     public String status;
@@ -36,10 +36,10 @@ public class ConversationsEntity {
     }
 
     public void setUsers_id(long users_id) {
-        this.users_id = users_id;
+        this.usersId = users_id;
     }
     public long getUsers_id() {
-        return users_id;
+        return usersId;
     }
 
     public void setStatus(String status) {
