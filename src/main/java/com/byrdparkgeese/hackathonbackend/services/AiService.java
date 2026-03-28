@@ -63,7 +63,6 @@ public class AiService {
         var requestBody = new ChatGptRequestBody(
             "gpt-5-nano", 
             new Message[]{ systemInput, userInput },
-            previous_response_id,
             new Text(
                 new Format(
                     "json_schema", 

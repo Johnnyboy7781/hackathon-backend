@@ -32,8 +32,10 @@ public class TextHookController {
     @Autowired
     Rva311Service rva311Service;
 
+    @Autowired
     private ConversationsRepository conversationsRepository;
 
+    @Autowired
     private UsersRepository usersRepository;
 
     @PostMapping("/webhook")
