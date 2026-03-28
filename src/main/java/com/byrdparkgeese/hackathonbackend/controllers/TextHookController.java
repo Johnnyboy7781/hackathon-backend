@@ -50,8 +50,13 @@ public class TextHookController {
         conversationService.saveUser(usersEntity);
 
         ConversationsEntity conversations = conversationService.loadOrCreateConversation(usersEntity.id, "Open");
-        conversations.setAddress(res.address());
-        conversations.setIssueDesc(res.issueDescription());
+
+        if (!res.address().isEmpty()) {
+            conversations.setAddress(res.address());
+        }
+        if (!res.issueDescription().isEmpty()) {
+            conversations.setIssueDesc(res.issueDescription());
+        }
         conversations.setStatus("Open");
         conversations.setUsers_id(usersEntity.id);
         conversationsRepository.save(conversations);
@@ -60,6 +65,7 @@ public class TextHookController {
             textService.sendText(payload.sender(), res.reply());
             return;
         }
+
         GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(res.address());
         conversations.setUsers_id(usersEntity.id);
         conversations.setStatus("Closed");
