@@ -59,7 +59,7 @@ public class TextHookController {
         conversations.setUsers_id(usersEntity.id);
         conversationsRepository.save(conversations);
 
-        if (conversations.getAddress().isEmpty() && conversations.getIssueDesc().isEmpty()) {
+        if (conversations.getAddress().isEmpty() || conversations.getIssueDesc().isEmpty()) {
             textService.sendText(payload.sender(), res.reply());
             return;
         }
