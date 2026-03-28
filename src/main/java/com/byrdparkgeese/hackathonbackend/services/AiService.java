@@ -37,13 +37,26 @@ public class AiService {
     @Autowired
     ObjectMapper mapper;
 
-    public ChatGptParsedData callChatgpt(String message) {
+    private ChatGptResponse callChatgpt(String message, ChatGptRequestBody requestBody) {
         var requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer %s".formatted(chatgptApiKey));
         requestHeaders.add("Content-Type", "application/json");
 
+        var httpEntity = new HttpEntity<>(requestBody, requestHeaders);
+
+        var response = restTemplate.exchange(
+            chatgptUrl,
+            HttpMethod.POST,
+            httpEntity,
+            ChatGptResponse.class
+        );
+
+        return response.getBody();
+    }
+
+    public ChatGptParsedData callAiToGatherInitialInfo(String userMessage) {
         Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS);
-        Message userInput = new Message("user", message);
+        Message userInput = new Message("user", userMessage);
 
         var requestBody = new ChatGptRequestBody(
             "gpt-5-nano", 
@@ -66,34 +79,27 @@ public class AiService {
             )
         );
 
-        var httpEntity = new HttpEntity<>(requestBody, requestHeaders);
+        var response = callChatgpt(userMessage, requestBody);
 
-        var response = restTemplate.exchange(
-            chatgptUrl,
-            HttpMethod.POST,
-            httpEntity,
-            ChatGptResponse.class
-        );
+        return parseResponse(response.output().get(1).content().get(0).text());
+    }
 
+    private ChatGptParsedData parseResponse(String responseString) {
         ChatGptParsedData parsed = null;
 
         try {
-            parsed = parseResponse(response.getBody().output().get(1).content().get(0).text());
+            Map<String, String> jsonMap = mapper.readValue(responseString, Map.class);
+
+            parsed = new ChatGptParsedData(
+                jsonMap.get("reply"),
+                jsonMap.get("address"),
+                jsonMap.get("issueDescription")
+            );
         } catch(JsonProcessingException err) {
             System.out.println("Failed to parse response from ChatGPT: ".formatted(err.getMessage()));
             err.printStackTrace();
         }
 
         return parsed;
-    }
-
-    private ChatGptParsedData parseResponse(String responseString) throws JsonProcessingException {
-        Map<String, String> jsonMap = mapper.readValue(responseString, Map.class);
-
-        return new ChatGptParsedData(
-            jsonMap.get("reply"),
-            jsonMap.get("address"),
-            jsonMap.get("issueDescription")
-        );
     }
 }

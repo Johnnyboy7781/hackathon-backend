@@ -21,7 +21,7 @@ public class TextHookController {
     @PostMapping("/webhook")
     public void handleTextMessage(@RequestBody TextMessageData payload) {
         System.out.println("Received a text!");
-        var res = aiService.callChatgpt(payload.message());
+        var res = aiService.callAiToGatherInitialInfo(payload.message());
 
         if (res != null) {
             textService.sendText(payload.sender(), res.reply());
