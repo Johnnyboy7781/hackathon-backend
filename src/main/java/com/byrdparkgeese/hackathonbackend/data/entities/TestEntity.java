@@ -1,4 +1,4 @@
-package com.byrdparkgeese.hackathonbackend.entities;
+package com.byrdparkgeese.hackathonbackend.data.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
