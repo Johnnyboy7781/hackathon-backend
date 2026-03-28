@@ -19,7 +19,10 @@ public class TestController {
 
     @GetMapping("/")
     public GetReportsData hello() {
-        return rva311Service.getReports();
+        return rva311Service.getReportWithRadius(
+                37.556163000000005,
+                -77.473413
+        );
     }
 
 }
