@@ -20,10 +20,10 @@ public class ConversationsEntity {
     public String address;
 
     @Column(name="latitude")
-    public long latitude;
+    public String latitude;
 
     @Column(name = "longitude")
-    public long longitude;
+    public String longitude;
 
     @Column(name = "issue_desc")
     public String issueDesc;
@@ -56,17 +56,17 @@ public class ConversationsEntity {
         return address;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-    public long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
-    public long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
