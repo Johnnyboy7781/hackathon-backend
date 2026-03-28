@@ -22,7 +22,10 @@ public class Rva311Service {
             "requestDate", 
             "desc", 
             1, 
-            "1766870961246"
+            "1766870961246",
+            null,
+            null,
+            null
         );
 
         ResponseEntity<GetReportsData> responseEntity = restTemplate.postForEntity(

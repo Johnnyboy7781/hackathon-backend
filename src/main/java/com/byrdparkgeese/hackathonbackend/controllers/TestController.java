@@ -18,9 +18,9 @@ public class TestController {
     Rva311Service rva311Service;
 
     @GetMapping("/")
-    public GetReportsData hello() {
+    public GetReportsData.Report hello() {
         var res = rva311Service.getReports();
-        return res;
+        return res.data()[0];
     }
 
 }
