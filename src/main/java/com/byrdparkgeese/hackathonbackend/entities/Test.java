@@ -1,4 +1,4 @@
-package com.railway.helloworld.entities;
+package com.byrdparkgeese.hackathonbackend.entities;
 
 import jakarta.persistence.*;
 
