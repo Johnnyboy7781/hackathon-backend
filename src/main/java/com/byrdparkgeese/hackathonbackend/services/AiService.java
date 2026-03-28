@@ -55,7 +55,7 @@ public class AiService {
         return response.getBody();
     }
 
-    public ChatGptParsedData callAiToGatherInitialInfo(TextMessageData textMessageData, String previous_response_id) {
+    public ChatGptParsedData callAiToGatherInitialInfo(TextMessageData textMessageData) {
         Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS_INITIAL_INFORMATION_GATHER);
         String userMessage = textMessageData.message();
         Message userInput = new Message("user", userMessage);

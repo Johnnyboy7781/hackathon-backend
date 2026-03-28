@@ -43,16 +43,11 @@ public class TextHookController {
         System.out.println("Received a text!");
 
         UsersEntity usersEntity = conversationService.loadOrCreateUserEntity(payload.sender());
-        String previous_response_id = "";
 
-        if (usersEntity.getPreviousResponseId() != null) {
-            previous_response_id = usersEntity.getPreviousResponseId();
-        }
-        var res = aiService.callAiToGatherInitialInfo(payload, previous_response_id);
+        var res = aiService.callAiToGatherInitialInfo(payload);
 
-        usersEntity.setPreviousResponseId(res.previous_response_id());
+        usersEntity.setPreviousResponseId("12345");
         conversationService.saveUser(usersEntity);
-
 
         ConversationsEntity conversations = conversationService.loadOrCreateConversation("Open");
         conversations.setAddress(res.address());
