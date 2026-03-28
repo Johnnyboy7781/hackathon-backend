@@ -49,7 +49,7 @@ public class TextHookController {
         usersEntity.setPreviousResponseId("12345");
         conversationService.saveUser(usersEntity);
 
-        ConversationsEntity conversations = conversationService.loadOrCreateConversation("Open");
+        ConversationsEntity conversations = conversationService.loadOrCreateConversation(usersEntity.id, "Open");
         conversations.setAddress(res.address());
         conversations.setIssueDesc(res.issueDescription());
         conversations.setStatus("Open");
