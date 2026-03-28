@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.byrdparkgeese.hackathonbackend.data.records.GetReportsData;
+import com.byrdparkgeese.hackathonbackend.services.AiService;
 import com.byrdparkgeese.hackathonbackend.data.repositories.UsersRepository;
 import com.byrdparkgeese.hackathonbackend.services.Rva311Service;
 
@@ -17,12 +17,12 @@ public class TestController {
     @Autowired
     Rva311Service rva311Service;
 
+    @Autowired
+    AiService aiService;
+
     @GetMapping("/")
-    public GetReportsData hello() {
-        return rva311Service.getReportWithRadius(
-                37.556163000000005,
-                -77.473413
-        );
+    public Object hello() {
+        return aiService.callAiToGatherInitialInfo("There is a tree down near the Virginia Museum of Fine Arts! I don't know the exact address!");
     }
 
 }

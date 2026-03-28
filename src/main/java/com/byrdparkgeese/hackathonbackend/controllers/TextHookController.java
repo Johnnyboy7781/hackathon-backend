@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.byrdparkgeese.hackathonbackend.data.records.TextMessageData;
 import com.byrdparkgeese.hackathonbackend.services.TextService;
+import com.byrdparkgeese.hackathonbackend.services.AiService;
 
 @RestController
 public class TextHookController {
@@ -14,9 +15,18 @@ public class TextHookController {
     @Autowired
     TextService textService;
 
+    @Autowired
+    AiService aiService;
+
     @PostMapping("/webhook")
     public void handleTextMessage(@RequestBody TextMessageData payload) {
         System.out.println("Received a text!");
-        textService.sendText(payload.sender(), "bigwhip1");
+        var res = aiService.callAiToGatherInitialInfo(payload.message());
+
+        if (res != null) {
+            textService.sendText(payload.sender(), res.reply());
+        } else {
+            System.out.println("Aborting sending text message, received no data");
+        }
     }
 }
