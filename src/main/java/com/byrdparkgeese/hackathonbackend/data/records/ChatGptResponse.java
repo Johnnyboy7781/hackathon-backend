@@ -21,7 +21,7 @@ public record ChatGptResponse(
         List<Output> output,
         boolean parallel_tool_calls,
         double presence_penalty,
-        Object previous_response_id,
+        String previous_response_id,
         Object prompt_cache_key,
         Object prompt_cache_retention,
         Reasoning reasoning,

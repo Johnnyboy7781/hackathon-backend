@@ -2,6 +2,7 @@ package com.byrdparkgeese.hackathonbackend.services;
 
 import java.util.Map;
 
+import com.byrdparkgeese.hackathonbackend.data.records.TextMessageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -54,13 +55,15 @@ public class AiService {
         return response.getBody();
     }
 
-    public ChatGptParsedData callAiToGatherInitialInfo(String userMessage) {
+    public ChatGptParsedData callAiToGatherInitialInfo(TextMessageData textMessageData, String previous_response_id) {
         Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS_INITIAL_INFORMATION_GATHER);
+        String userMessage = textMessageData.message();
         Message userInput = new Message("user", userMessage);
 
         var requestBody = new ChatGptRequestBody(
             "gpt-5-nano", 
-            new Message[]{ systemInput, userInput }, 
+            new Message[]{ systemInput, userInput },
+            previous_response_id,
             new Text(
                 new Format(
                     "json_schema", 
@@ -81,10 +84,10 @@ public class AiService {
 
         var response = callChatgpt(userMessage, requestBody);
 
-        return parseResponse(response.output().get(1).content().get(0).text());
+        return parseResponse(response.output().get(1).content().get(0).text(), response.previous_response_id());
     }
 
-    private ChatGptParsedData parseResponse(String responseString) {
+    private ChatGptParsedData parseResponse(String responseString, String previous_record_id) {
         ChatGptParsedData parsed = null;
 
         try {
@@ -93,7 +96,8 @@ public class AiService {
             parsed = new ChatGptParsedData(
                 jsonMap.get("reply"),
                 jsonMap.get("address"),
-                jsonMap.get("issueDescription")
+                jsonMap.get("issueDescription"),
+                previous_record_id
             );
         } catch(JsonProcessingException err) {
             System.out.println("Failed to parse response from ChatGPT: ".formatted(err.getMessage()));

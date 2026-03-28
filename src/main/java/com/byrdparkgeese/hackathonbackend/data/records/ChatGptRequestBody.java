@@ -1,8 +1,11 @@
 package com.byrdparkgeese.hackathonbackend.data.records;
 
+import jakarta.annotation.Nullable;
+
 public record ChatGptRequestBody(
     String model,
     Message[] input,
+    @Nullable String previous_response_id,
     Text text
 ) {
     public record Message(
