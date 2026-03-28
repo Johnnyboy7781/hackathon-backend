@@ -37,7 +37,7 @@ public class ConversationService {
     }
 
     public ConversationsEntity loadOrCreateConversation(long userId, String status){
-        Optional<ConversationsEntity> foundConvo = conversationsRepository.findByUserIdAndStatus(userId, status);
+        Optional<ConversationsEntity> foundConvo = conversationsRepository.findByUsersIdAndStatus(userId, status);
 
         return foundConvo.orElseGet(ConversationsEntity::new);
     }
