@@ -1,3 +1,5 @@
+package com.byrdparkgeese.hackathonbackend.data.records;
+
 import java.util.List;
 import java.util.Map;
 
