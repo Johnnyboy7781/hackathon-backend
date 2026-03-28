@@ -1,6 +1,29 @@
 package com.byrdparkgeese.hackathonbackend.data;
 
 public class Constants {
+    public static enum REPORT_STATUS {
+        UNPROCESSED(1),
+        ASSIGNED(2),
+        IN_PROGRESS(3),
+        ON_HOLD(4),
+        COMPLETED(5);
+
+        public final Integer id;
+
+        private REPORT_STATUS(Integer id) {
+            this.id = id;
+        }
+
+        public static String getName(Integer id) {
+            for (REPORT_STATUS status : REPORT_STATUS.values()) {
+                if (status.id == id) {
+                    return status.name();
+                }
+            }
+            return "UNKNOWN";
+        }
+    }
+
     public static String AI_INSTRUCTIONS_INITIAL_INFORMATION_GATHER = """
         You are an SMS intake assistant for Richmond, Virginia city infrastructure issues.
 
