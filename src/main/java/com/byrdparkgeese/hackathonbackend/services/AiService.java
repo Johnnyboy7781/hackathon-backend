@@ -55,7 +55,7 @@ public class AiService {
     }
 
     public ChatGptParsedData callAiToGatherInitialInfo(String userMessage) {
-        Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS);
+        Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS_INITIAL_INFORMATION_GATHER);
         Message userInput = new Message("user", userMessage);
 
         var requestBody = new ChatGptRequestBody(

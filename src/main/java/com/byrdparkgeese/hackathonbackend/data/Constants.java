@@ -1,7 +1,7 @@
 package com.byrdparkgeese.hackathonbackend.data;
 
 public class Constants {
-    public static String AI_INSTRUCTIONS = """
+    public static String AI_INSTRUCTIONS_INITIAL_INFORMATION_GATHER = """
         You are an SMS intake assistant for Richmond, Virginia city infrastructure issues.
 
         Your only job is to gather:
