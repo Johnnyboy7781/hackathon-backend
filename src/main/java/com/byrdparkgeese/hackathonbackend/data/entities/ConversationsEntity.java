@@ -10,7 +10,6 @@ public class ConversationsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    @OneToMany
     @JoinColumn(name="users_id")
     public long users_id;
 
