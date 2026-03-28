@@ -1,5 +1,7 @@
 package com.byrdparkgeese.hackathonbackend.services;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -15,7 +17,10 @@ import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.F
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Properties;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Properties.Property;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptResponse;
+import com.byrdparkgeese.hackathonbackend.data.records.ChatGptParsedData;
 import com.byrdparkgeese.hackathonbackend.data.Constants;
 
 @Service
@@ -29,7 +34,10 @@ public class AiService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ChatGptResponse callChatgpt(String message) {
+    @Autowired
+    ObjectMapper mapper;
+
+    public ChatGptParsedData callChatgpt(String message) {
         var requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer %s".formatted(chatgptApiKey));
         requestHeaders.add("Content-Type", "application/json");
@@ -67,6 +75,25 @@ public class AiService {
             ChatGptResponse.class
         );
 
-        return response.getBody();
+        ChatGptParsedData parsed = null;
+
+        try {
+            parsed = parseResponse(response.getBody().output().get(1).content().get(0).text());
+        } catch(JsonProcessingException err) {
+            System.out.println("Failed to parse response from ChatGPT: ".formatted(err.getMessage()));
+            err.printStackTrace();
+        }
+
+        return parsed;
+    }
+
+    private ChatGptParsedData parseResponse(String responseString) throws JsonProcessingException {
+        Map<String, String> jsonMap = mapper.readValue(responseString, Map.class);
+
+        return new ChatGptParsedData(
+            jsonMap.get("reply"),
+            jsonMap.get("address"),
+            jsonMap.get("issueDescription")
+        );
     }
 }

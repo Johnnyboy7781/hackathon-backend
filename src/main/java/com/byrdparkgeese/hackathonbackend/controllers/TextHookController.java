@@ -22,7 +22,11 @@ public class TextHookController {
     public void handleTextMessage(@RequestBody TextMessageData payload) {
         System.out.println("Received a text!");
         var res = aiService.callChatgpt(payload.message());
-        var msg = res.output().get(1).content().get(0).text();
-        textService.sendText(payload.sender(), msg);
+
+        if (res != null) {
+            textService.sendText(payload.sender(), res.reply());
+        } else {
+            System.out.println("Aborting sending text message, received no data");
+        }
     }
 }
