@@ -1,10 +1,13 @@
 package com.byrdparkgeese.hackathonbackend.controllers;
 
+import java.io.UnsupportedEncodingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.byrdparkgeese.hackathonbackend.services.AiService;
+import com.byrdparkgeese.hackathonbackend.services.GeocodingService;
 import com.byrdparkgeese.hackathonbackend.data.repositories.UsersRepository;
 import com.byrdparkgeese.hackathonbackend.services.Rva311Service;
 
@@ -20,9 +23,12 @@ public class TestController {
     @Autowired
     AiService aiService;
 
+    @Autowired
+    GeocodingService geocodingService;
+
     @GetMapping("/")
     public Object hello() {
-        return aiService.callAiToGatherInitialInfo("There is a tree down near the Virginia Museum of Fine Arts! I don't know the exact address!");
+        return geocodingService.getLatLongFromAddress("200 N Boulevard, Richmond, VA 23220").features().get(0).properties();
     }
 
 }
