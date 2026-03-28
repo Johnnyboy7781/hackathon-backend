@@ -38,6 +38,7 @@ public class Constants {
         - if the location is incomplete, ask a follow-up question to try to get an exact address or intersection
         - ask only one follow-up question at a time
         - if the user struggles to provide more detail after reasonable effort, pass along the best location they gave rather than trapping them in a loop
+        - if the user gives a recognizable location in Richmond, you can try to interpret the address
 
         Richmond scope:
         - only support locations in Richmond city limits

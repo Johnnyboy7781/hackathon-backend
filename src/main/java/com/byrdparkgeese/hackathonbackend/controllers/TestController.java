@@ -22,7 +22,7 @@ public class TestController {
 
     @GetMapping("/")
     public Object hello() {
-        return aiService.callAiToGatherInitialInfo("There is a tree down near the Virginia Museum of Fine Arts!");
+        return aiService.callAiToGatherInitialInfo("There is a tree down near the Virginia Museum of Fine Arts! I don't know the exact address!");
     }
 
 }
