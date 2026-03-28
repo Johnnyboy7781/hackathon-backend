@@ -15,8 +15,10 @@ public class ConversationService {
     @Autowired
     AiService aiService;
 
+    @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
     private ConversationsRepository conversationsRepository;
 
     public UsersEntity loadOrCreateUserEntity(String phoneNumber) {
@@ -35,10 +37,9 @@ public class ConversationService {
     }
 
     public ConversationsEntity loadOrCreateConversation(String status){
-        ConversationsEntity conversations;
         Optional<ConversationsEntity> foundConvo = conversationsRepository.findByStatus(status);
 
-        return conversations = foundConvo.orElseGet(ConversationsEntity::new);
+        return foundConvo.orElseGet(ConversationsEntity::new);
     }
 
     public void saveUser(UsersEntity usersEntity){
