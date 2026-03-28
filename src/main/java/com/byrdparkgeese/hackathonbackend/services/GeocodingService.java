@@ -1,7 +1,5 @@
 package com.byrdparkgeese.hackathonbackend.services;
 
-import java.io.UnsupportedEncodingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
