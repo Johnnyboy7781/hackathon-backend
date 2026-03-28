@@ -1,14 +1,12 @@
 package com.byrdparkgeese.hackathonbackend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.byrdparkgeese.hackathonbackend.data.records.GetReportsData;
 import com.byrdparkgeese.hackathonbackend.data.records.GetReportsRequestBody;
-import org.springframework.web.service.annotation.GetExchange;
 
 @Service
 public class Rva311Service {

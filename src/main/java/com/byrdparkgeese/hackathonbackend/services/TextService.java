@@ -8,6 +8,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.byrdparkgeese.hackathonbackend.data.Constants.REPORT_STATUS;
+import com.byrdparkgeese.hackathonbackend.data.records.GetReportsData;
+import com.byrdparkgeese.hackathonbackend.data.records.GetReportsData.Report;
 import com.byrdparkgeese.hackathonbackend.data.records.TextSendRequestBody;
 
 @Service
@@ -43,6 +46,23 @@ public class TextService {
             System.out.println("Failed to send message: {}".formatted(err.getMessage()));
             err.printStackTrace();
         }
+    }
+
+    public String formatReportsMessage(Report[] reportsList) {
+       String formattedMessage = "Below are the following open reports that seem to correspond with your address and issue!\n\n";
+
+        for (Report report : reportsList) {
+            formattedMessage += "-----\n\n";
+            formattedMessage += "Title: %s\n".formatted(report.serviceName());
+            formattedMessage += "Description: %s\n".formatted(report.description());
+            formattedMessage += "Location: %s\n".formatted(report.location());
+            formattedMessage += "Status: %s\n\n".formatted(REPORT_STATUS.getName(report.status()));
+        }
+
+        formattedMessage += "-----\n\n";
+        formattedMessage += "If none of these seem to correspond with the issue you are reporting, just let me know and I can submit a report for you!";
+
+       return formattedMessage;
     }
 
 }
