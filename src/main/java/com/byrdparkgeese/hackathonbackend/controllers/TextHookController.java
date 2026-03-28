@@ -80,9 +80,5 @@ public class TextHookController {
         String formattedReport = textService.formatReportsMessage(reportsData.data());
 
         textService.sendText(payload.sender(), formattedReport);
-
-        if (res == null) {
-            System.out.println("Aborting sending text message, received no data");
-        }
     }
 }
