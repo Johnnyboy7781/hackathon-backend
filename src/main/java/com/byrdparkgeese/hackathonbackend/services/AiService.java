@@ -39,7 +39,7 @@ public class AiService {
     @Autowired
     ObjectMapper mapper;
 
-    private ChatGptResponse callChatgpt(String message, ChatGptRequestBody requestBody) {
+    private <T> ChatGptResponse callChatgpt(String message, ChatGptRequestBody<T> requestBody) {
         var requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer %s".formatted(chatgptApiKey));
         requestHeaders.add("Content-Type", "application/json");
