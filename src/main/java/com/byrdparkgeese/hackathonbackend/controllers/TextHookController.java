@@ -8,6 +8,9 @@ import com.byrdparkgeese.hackathonbackend.data.repositories.ConversationsReposit
 import com.byrdparkgeese.hackathonbackend.data.repositories.RepliesByTypeRepository;
 import com.byrdparkgeese.hackathonbackend.data.repositories.UsersRepository;
 import com.byrdparkgeese.hackathonbackend.services.*;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +45,9 @@ public class TextHookController {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private AxiomService axiomService;
+
     public void handleReportableTextMessage(TextMessageData payload, ConversationsEntity conversation) { 
         var message = payload.message().toLowerCase();
         
@@ -61,6 +67,23 @@ public class TextHookController {
         var dbCategory = repliesTypeRepo.findByCategory(category);
 
         textService.sendText(payload.sender(), dbCategory.getReplyText());
+
+        var optionsList = List.of("12345", conversation.getAddress(), conversation.getIssueDesc());
+
+        if (dbCategory.getCategory() == "Pothole On Road") {
+            optionsList.add("Sidewalk");
+            optionsList.add("0");
+            optionsList.add("0");
+            optionsList.add("ArrowDown||Enter");
+        } else if (dbCategory.getCategory() == "Repair Sidewalk Or Ramp") {
+            optionsList.add("Pothole");
+            optionsList.add("0");
+            optionsList.add("0");
+        } else {
+            return;
+        }
+
+        axiomService.triggerAxiomHooks(optionsList);
     }
 
     @PostMapping("/webhook")
