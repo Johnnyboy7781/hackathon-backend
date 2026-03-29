@@ -85,11 +85,15 @@ Built entirely on existing systems and public data.
 
 ## Known Limitations
 
+The bot replies slowly via text due to limitations in our texting service (free version.)
+
 New RVA311 request submission is limited to:
   - potholes  
-  - sidewalk issues  
+  - sidewalk issues
 
-We built the framework to support submitting other types of request. With more time, we could easily build those out (XXX, YYY, ZZZ, etc).
+Our automation of 311 submissions intentionally completes each step EXCEPT for the final submission, so that we do not generate bunk data for their system while testing or demoing our tool.
+
+We built the framework to support submitting other types of request. With more time, we could easily build those out.
 
 Other categories are guided to visit RVA311 or call the appropriate number, exactly as the RVA311 app currently does.
 
