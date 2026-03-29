@@ -2,7 +2,6 @@
 
 ## Pillars
 **Primary:** Thriving City Hall  
-**Secondary:** Thriving Built Environment  
 
 We help Richmond residents find the right next step with city services and understand what’s happening near them, using a simple text message.
 
