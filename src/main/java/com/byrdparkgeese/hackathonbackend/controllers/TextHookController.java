@@ -9,6 +9,7 @@ import com.byrdparkgeese.hackathonbackend.data.repositories.RepliesByTypeReposit
 import com.byrdparkgeese.hackathonbackend.data.repositories.UsersRepository;
 import com.byrdparkgeese.hackathonbackend.services.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,7 +138,8 @@ public class TextHookController {
                 geocodingResponse.features().get(0).properties().lat(),
                 geocodingResponse.features().get(0).properties().lon()
                 );
-        String formattedReport = textService.formatReportsMessage(reportsData.data());
+        var limitedArray = Arrays.copyOfRange(reportsData.data(), 0, 2);
+        String formattedReport = textService.formatReportsMessage(limitedArray);
 
         textService.sendText(payload.sender(), formattedReport);
     }
