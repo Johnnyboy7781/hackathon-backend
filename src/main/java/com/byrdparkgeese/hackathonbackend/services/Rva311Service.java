@@ -44,7 +44,7 @@ public class Rva311Service {
     {
         String url = rva311Url + "/query?latitude=" + String.valueOf(latitude) +
                 "&longitude=" + String.valueOf(longitude) +
-                "&radius=10&status=1&status=2&status=3&status=4";
+                "&radius=100&status=1&status=2&status=3&status=4";
 
         ResponseEntity<GetReportsData> responseEntity = restTemplate.getForEntity(
                 url,
