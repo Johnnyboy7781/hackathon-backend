@@ -57,6 +57,7 @@ public class TextHookController {
             conversations.setAddress("");
         }
         if (!res.issueDescription().isEmpty()) {
+            System.out.println("RECEIVED: %s".formatted(res.issueDescription()));
             conversations.setIssueDesc(res.issueDescription());
         } else if (conversations.getIssueDesc() == null) {
             conversations.setIssueDesc("");
