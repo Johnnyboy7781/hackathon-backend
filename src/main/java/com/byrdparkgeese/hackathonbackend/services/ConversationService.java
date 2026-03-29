@@ -42,6 +42,10 @@ public class ConversationService {
         return foundConvo.orElseGet(ConversationsEntity::new);
     }
 
+    public Optional<ConversationsEntity> loadConversationIfExists(long userId, String status){
+        return conversationsRepository.findByUsersIdAndStatus(userId, status);
+    }
+
     public void saveUser(UsersEntity usersEntity){
         usersRepository.save(usersEntity);
     }

@@ -38,11 +38,36 @@ public class TextHookController {
     @Autowired
     private UsersRepository usersRepository;
 
+    public void handleReportableTextMessage(TextMessageData payload, ConversationsEntity conversation) { 
+        var message = payload.message().toLowerCase();
+        
+        if (message == "no") {
+            conversation.setStatus("Closed");
+            conversationsRepository.save(conversation);
+            return;
+        }
+
+        if (message != "yes") {
+            textService.sendText(payload.sender(), "Please reply YES if you want to submit a report, else reply NO to cancel");
+            return;
+        }
+
+        
+    }
+
     @PostMapping("/webhook")
     public void handleTextMessage(@RequestBody TextMessageData payload) {
         System.out.println("Received a text!");
 
         UsersEntity usersEntity = conversationService.loadOrCreateUserEntity(payload.sender());
+
+        var conversationOptional = conversationService.loadConversationIfExists(usersEntity.id, "Reportable");
+
+        if (conversationOptional.isPresent()) {
+            var convo = conversationOptional.get();
+            handleReportableTextMessage(payload, convo);
+            return;
+        }
 
         var res = aiService.callAiToGatherInitialInfo(payload);
 
@@ -72,7 +97,7 @@ public class TextHookController {
         }
 
         GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(conversations.getAddress());
-        conversations.setStatus("Closed");
+        conversations.setStatus("Reportable");
         conversations.setLatitude(
                 String.valueOf(geocodingResponse.features().get(0).properties().lat())
         );
