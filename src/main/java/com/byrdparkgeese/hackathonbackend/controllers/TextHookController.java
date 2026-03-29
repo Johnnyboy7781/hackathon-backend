@@ -5,6 +5,7 @@ import com.byrdparkgeese.hackathonbackend.data.entities.UsersEntity;
 import com.byrdparkgeese.hackathonbackend.data.records.GeocodingResponse;
 import com.byrdparkgeese.hackathonbackend.data.records.GetReportsData;
 import com.byrdparkgeese.hackathonbackend.data.repositories.ConversationsRepository;
+import com.byrdparkgeese.hackathonbackend.data.repositories.RepliesByTypeRepository;
 import com.byrdparkgeese.hackathonbackend.data.repositories.UsersRepository;
 import com.byrdparkgeese.hackathonbackend.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class TextHookController {
     private ConversationsRepository conversationsRepository;
 
     @Autowired
+    private RepliesByTypeRepository repliesTypeRepo;
+
+    @Autowired
     private UsersRepository usersRepository;
 
     public void handleReportableTextMessage(TextMessageData payload, ConversationsEntity conversation) { 
@@ -52,7 +56,11 @@ public class TextHookController {
             return;
         }
 
+        var category = aiService.callAiToClassifyWorkType(conversation.getIssueDesc()).category();
         
+        var dbCategory = repliesTypeRepo.findByCategory(category);
+
+        textService.sendText(payload.sender(), dbCategory.getReplyText());
     }
 
     @PostMapping("/webhook")

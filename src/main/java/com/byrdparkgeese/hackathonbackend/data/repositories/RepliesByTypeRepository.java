@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepliesByTypeRepository extends JpaRepository<RepliesByTypeEntity, Long> {
 
+    RepliesByTypeEntity findByCategory(String category);
+
 }
