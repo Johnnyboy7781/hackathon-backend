@@ -72,11 +72,11 @@ public class TextHookController {
 
         var optionsList = List.of("12345", conversation.getAddress(), conversation.getIssueDesc());
 
-        if (dbCategory.getCategory() == "Pothole On Road") {
+        if (dbCategory.getCategory().equalsIgnoreCase("Pothole On Road")) {
             optionsList.add("Pothole");
             optionsList.add("0");
             optionsList.add("0");
-        } else if (dbCategory.getCategory() == "Repair Sidewalk Or Ramp") {
+        } else if (dbCategory.getCategory().equalsIgnoreCase("Repair Sidewalk Or Ramp")) {
             optionsList.add("Sidewalk");
             optionsList.add("0");
             optionsList.add("0");
