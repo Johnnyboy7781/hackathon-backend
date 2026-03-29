@@ -53,12 +53,12 @@ public class TextHookController {
 
         if (!res.address().isEmpty()) {
             conversations.setAddress(res.address());
-        } else {
+        } else if (conversations.getAddress() == null) {
             conversations.setAddress("");
         }
         if (!res.issueDescription().isEmpty()) {
             conversations.setIssueDesc(res.issueDescription());
-        } else {
+        } else if (conversations.getIssueDesc() == null) {
             conversations.setIssueDesc("");
         }
         conversations.setStatus("Open");
