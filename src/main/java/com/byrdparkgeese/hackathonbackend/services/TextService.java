@@ -56,6 +56,9 @@ public class TextService {
        String formattedMessage = "Below are the following open reports that seem to correspond with your address and issue!\n\n";
 
         for (Report report : reportsList) {
+            if (report == null) {
+                continue;
+            }
             System.out.println("Report: %s".formatted(report.location()));
             formattedMessage += "-----\n\n";
             formattedMessage += "Title: %s\n".formatted(report.serviceName());
