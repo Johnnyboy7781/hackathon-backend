@@ -70,17 +70,12 @@ public class TextHookController {
 
         textService.sendText(payload.sender(), dbCategory.getReplyText());
 
-        var optionsList = List.of("12345", conversation.getAddress(), conversation.getIssueDesc());
+        List<String> optionsList = null;
 
         if (dbCategory.getCategory().equalsIgnoreCase("Pothole On Road")) {
-            optionsList.add("Pothole");
-            optionsList.add("0");
-            optionsList.add("0");
+            optionsList = List.of("12345", conversation.getAddress(), conversation.getIssueDesc(), "Pothole", "0", "0");
         } else if (dbCategory.getCategory().equalsIgnoreCase("Repair Sidewalk Or Ramp")) {
-            optionsList.add("Sidewalk");
-            optionsList.add("0");
-            optionsList.add("0");
-            optionsList.add("ArrowDown||Enter");
+            optionsList = List.of("12345", conversation.getAddress(), conversation.getIssueDesc(), "Sidewalk", "0", "0", "ArrowDown||Enter");
         }
 
         axiomService.triggerAxiomHooks(optionsList);
