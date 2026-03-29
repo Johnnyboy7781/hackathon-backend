@@ -101,6 +101,6 @@ Other categories are guided to visit RVA311 or call the appropriate number, exac
 
 ## Links
 
-- Demo video: [link]  
+- Demo video: https://youtu.be/VntDNxL_Vi4
 - https://byrdparkgeese.com  
 - Try it: Text 804-244-9471  
