@@ -49,17 +49,17 @@ public class TextHookController {
     private AxiomService axiomService;
 
     public void handleReportableTextMessage(TextMessageData payload, ConversationsEntity conversation) { 
-        var message = payload.message().toLowerCase();
+        var message = payload.message().toLowerCase().trim();
 
         System.out.println(message);
         
-        if (message == "no") {
+        if (message.equalsIgnoreCase("no")) {
             conversation.setStatus("Closed");
             conversationsRepository.save(conversation);
             return;
         }
 
-        if (message != "yes") {
+        if (!message.equalsIgnoreCase("yes")) {
             textService.sendText(payload.sender(), "Please reply YES if you want to submit a report, else reply NO to cancel");
             return;
         }
