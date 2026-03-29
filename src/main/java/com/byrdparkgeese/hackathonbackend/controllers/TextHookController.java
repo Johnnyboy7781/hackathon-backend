@@ -50,6 +50,8 @@ public class TextHookController {
 
     public void handleReportableTextMessage(TextMessageData payload, ConversationsEntity conversation) { 
         var message = payload.message().toLowerCase();
+
+        System.out.println(message);
         
         if (message == "no") {
             conversation.setStatus("Closed");
