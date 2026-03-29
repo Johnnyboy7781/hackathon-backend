@@ -3,7 +3,7 @@ package com.byrdparkgeese.hackathonbackend.data.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class UsersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,8 +12,8 @@ public class UsersEntity {
     @Column(name="phone_number", length = 20, nullable = false)
     public String phoneNumber;
 
-    @Column(name="convo_id", length = 10, nullable = false)
-    public Long convoId;
+    @Column(name="previous_response_id", length = 10, nullable = false)
+    public String previousResponseId;
 
 
     public void setId(Long id) { this.id = id; }
@@ -26,9 +26,9 @@ public class UsersEntity {
         return phoneNumber;
     }
 
-    public void setConvoId(Long convoId) { this.convoId = convoId; }
-    public Long getConvoId() {
-        return convoId;
+    public void setPreviousResponseId(String previousResponseId) { this.previousResponseId = previousResponseId; }
+    public String getPreviousResponseId() {
+        return previousResponseId;
     }
 
 

@@ -3,5 +3,6 @@ package com.byrdparkgeese.hackathonbackend.data.records;
 public record ChatGptParsedData(
     String reply,
     String address,
-    String issueDescription
+    String issueDescription,
+    String previous_response_id
 ) {}

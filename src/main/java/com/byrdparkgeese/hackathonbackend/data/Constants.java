@@ -74,10 +74,17 @@ public class Constants {
         When you have enough information for lookup:
         - include the best available address and issueDescription
 
-        If you do not have enough information for lookup:
+        If you do not have enough information to decide an address:
         - provide your reply to the user
         - return address and issueDescription as empty strings
-    """;
+        - return address as an empty string
+
+        If you do not have enough information to decide an issue description:
+        - provide your reply to the user
+        - return issueDescription as an empty string
+
+        YOU CAN RETURN ONE WITHOUT THE OTHER
+        """;
 
     public static String AI_INSTRUCTIONS_CLASSIFY_WORK_TYPE = """
         You are a strict municipal issue classifier for the City of Richmond.

@@ -2,6 +2,7 @@ package com.byrdparkgeese.hackathonbackend.services;
 
 import java.util.Map;
 
+import com.byrdparkgeese.hackathonbackend.data.records.TextMessageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -55,8 +56,9 @@ public class AiService {
         return response.getBody();
     }
 
-    public ChatGptParsedData callAiToGatherInitialInfo(String userMessage) {
+    public ChatGptParsedData callAiToGatherInitialInfo(TextMessageData textMessageData) {
         Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS_INITIAL_INFORMATION_GATHER);
+        String userMessage = textMessageData.message();
         Message userInput = new Message("user", userMessage);
 
         var requestBody = new ChatGptRequestBody<Bot1Properties>(
@@ -122,7 +124,8 @@ public class AiService {
             parsed = new ChatGptParsedData(
                 jsonMap.get("reply"),
                 jsonMap.get("address"),
-                jsonMap.get("issueDescription")
+                jsonMap.get("issueDescription"),
+                ""
             );
         } catch(JsonProcessingException err) {
             System.out.println("Failed to parse response from ChatGPT: ".formatted(err.getMessage()));

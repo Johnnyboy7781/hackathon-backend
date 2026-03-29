@@ -49,9 +49,14 @@ public class TextService {
     }
 
     public String formatReportsMessage(Report[] reportsList) {
+       if (reportsList.length == 0) {
+           return "Looks like there are no open reports nearby for this issue, reply YES if you would like me to submit a report for you!";
+       }
+
        String formattedMessage = "Below are the following open reports that seem to correspond with your address and issue!\n\n";
 
         for (Report report : reportsList) {
+            System.out.println("Report: %s".formatted(report.location()));
             formattedMessage += "-----\n\n";
             formattedMessage += "Title: %s\n".formatted(report.serviceName());
             formattedMessage += "Description: %s\n".formatted(report.description());
@@ -60,7 +65,7 @@ public class TextService {
         }
 
         formattedMessage += "-----\n\n";
-        formattedMessage += "If none of these seem to correspond with the issue you are reporting, just let me know and I can submit a report for you!";
+        formattedMessage += "If none of these seem to correspond with the issue you are reporting, reply YES if you would like me submit a report for you!";
 
        return formattedMessage;
     }

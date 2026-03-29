@@ -3,7 +3,7 @@ package com.byrdparkgeese.hackathonbackend.data.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Conversations")
+@Table(name = "conversations")
 public class ConversationsEntity {
 
     @Id
@@ -11,7 +11,7 @@ public class ConversationsEntity {
     public long id;
 
     @JoinColumn(name="users_id")
-    public long users_id;
+    public long usersId;
 
     @Column(name="status", length = 10)
     public String status;
@@ -20,10 +20,10 @@ public class ConversationsEntity {
     public String address;
 
     @Column(name="latitude")
-    public long latitude;
+    public String latitude;
 
     @Column(name = "longitude")
-    public long longitude;
+    public String longitude;
 
     @Column(name = "issue_desc")
     public String issueDesc;
@@ -36,10 +36,10 @@ public class ConversationsEntity {
     }
 
     public void setUsers_id(long users_id) {
-        this.users_id = users_id;
+        this.usersId = users_id;
     }
     public long getUsers_id() {
-        return users_id;
+        return usersId;
     }
 
     public void setStatus(String status) {
@@ -56,17 +56,17 @@ public class ConversationsEntity {
         return address;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-    public long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
-    public long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
