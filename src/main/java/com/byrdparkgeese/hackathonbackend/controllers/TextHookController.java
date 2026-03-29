@@ -94,12 +94,13 @@ public class TextHookController {
 
         UsersEntity usersEntity = conversationService.loadOrCreateUserEntity(payload.sender());
 
-        var conversationOptional = conversationService.loadConversationIfExists(usersEntity.id, "Reportable");
-
-        if (conversationOptional.isPresent()) {
-            var convo = conversationOptional.get();
-            handleReportableTextMessage(payload, convo);
-            return;
+        if (usersEntity.id != null) {
+            var conversationOptional = conversationService.loadConversationIfExists(usersEntity.id, "Reportable");
+                if (conversationOptional.isPresent()) {
+                    var convo = conversationOptional.get();
+                    handleReportableTextMessage(payload, convo);
+                    return;
+                }
         }
 
         var res = aiService.callAiToGatherInitialInfo(payload);
