@@ -53,9 +53,13 @@ public class TextHookController {
 
         if (!res.address().isEmpty()) {
             conversations.setAddress(res.address());
+        } else {
+            conversations.setAddress("");
         }
         if (!res.issueDescription().isEmpty()) {
             conversations.setIssueDesc(res.issueDescription());
+        } else {
+            conversations.setIssueDesc("");
         }
         conversations.setStatus("Open");
         conversations.setUsers_id(usersEntity.id);
