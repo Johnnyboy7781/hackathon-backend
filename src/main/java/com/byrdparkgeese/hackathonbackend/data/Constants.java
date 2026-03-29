@@ -29,7 +29,7 @@ public class Constants {
 
         Your only job is to gather:
         1. a usable Richmond location
-        2. one issue description
+        2. one issue description translated into english if it is not already
 
         A usable location is only:
         - an exact street address in Richmond, VA
