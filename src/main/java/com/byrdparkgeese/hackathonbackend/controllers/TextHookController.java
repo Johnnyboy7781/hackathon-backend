@@ -53,12 +53,13 @@ public class TextHookController {
 
         if (!res.address().isEmpty()) {
             conversations.setAddress(res.address());
-        } else {
+        } else if (conversations.getAddress() == null) {
             conversations.setAddress("");
         }
         if (!res.issueDescription().isEmpty()) {
+            System.out.println("RECEIVED: %s".formatted(res.issueDescription()));
             conversations.setIssueDesc(res.issueDescription());
-        } else {
+        } else if (conversations.getIssueDesc() == null) {
             conversations.setIssueDesc("");
         }
         conversations.setStatus("Open");
@@ -70,7 +71,7 @@ public class TextHookController {
             return;
         }
 
-        GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(res.address());
+        GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(conversations.getAddress());
         conversations.setStatus("Closed");
         conversations.setLatitude(
                 String.valueOf(geocodingResponse.features().get(0).properties().lat())
