@@ -16,11 +16,12 @@ import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Messag
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema;
-import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Properties;
-import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Properties.Property;
+import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Bot1Properties;
+import com.byrdparkgeese.hackathonbackend.data.records.ChatGptRequestBody.Text.Format.Schema.Bot2Properties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptResponse;
+import com.byrdparkgeese.hackathonbackend.data.records.Bot2ParsedData;
 import com.byrdparkgeese.hackathonbackend.data.records.ChatGptParsedData;
 import com.byrdparkgeese.hackathonbackend.data.Constants;
 
@@ -38,7 +39,7 @@ public class AiService {
     @Autowired
     ObjectMapper mapper;
 
-    private ChatGptResponse callChatgpt(String message, ChatGptRequestBody requestBody) {
+    private <T> ChatGptResponse callChatgpt(String message, ChatGptRequestBody<T> requestBody) {
         var requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer %s".formatted(chatgptApiKey));
         requestHeaders.add("Content-Type", "application/json");
@@ -60,19 +61,19 @@ public class AiService {
         String userMessage = textMessageData.message();
         Message userInput = new Message("user", userMessage);
 
-        var requestBody = new ChatGptRequestBody(
+        var requestBody = new ChatGptRequestBody<Bot1Properties>(
             "gpt-5-nano", 
-            new Message[]{ systemInput, userInput },
-            new Text(
-                new Format(
+            new Message[]{ systemInput, userInput }, 
+            new Text<Bot1Properties>(
+                new Format<Bot1Properties>(
                     "json_schema", 
                     "parsedData",
-                    new Schema(
+                    new Schema<Bot1Properties>(
                         "object",
-                        new Properties(
-                            new Property("string"), 
-                            new Property("string"), 
-                            new Property("string")
+                        new Bot1Properties(
+                            new Bot1Properties.Property("string"), 
+                            new Bot1Properties.Property("string"), 
+                            new Bot1Properties.Property("string")
                         ),
                         new String[]{"reply", "address", "issueDescription"},
                         false
@@ -83,10 +84,38 @@ public class AiService {
 
         var response = callChatgpt(userMessage, requestBody);
 
-        return parseResponse(response.output().get(1).content().get(0).text(), response.previous_response_id());
+        return parseResponseBot1(response.output().get(1).content().get(0).text());
     }
 
-    private ChatGptParsedData parseResponse(String responseString, String previous_record_id) {
+    public Bot2ParsedData callAiToClassifyWorkType(String issueDescription) {
+        Message systemInput = new Message("system", Constants.AI_INSTRUCTIONS_CLASSIFY_WORK_TYPE);
+        Message userInput = new Message("user", issueDescription);
+
+        var requestBody = new ChatGptRequestBody<Bot2Properties>(
+            "gpt-5-nano", 
+            new Message[]{ systemInput, userInput }, 
+            new Text<Bot2Properties>(
+                new Format<Bot2Properties>(
+                    "json_schema", 
+                    "parsedData",
+                    new Schema<Bot2Properties>(
+                        "object",
+                        new Bot2Properties(
+                            new Bot2Properties.Property("string")
+                        ),
+                        new String[]{"category"},
+                        false
+                    )
+                )
+            )
+        );
+
+        var response = callChatgpt(issueDescription, requestBody);
+
+        return parseResponseBot2(response.output().get(1).content().get(0).text());
+    }
+
+    private ChatGptParsedData parseResponseBot1(String responseString) {
         ChatGptParsedData parsed = null;
 
         try {
@@ -96,7 +125,24 @@ public class AiService {
                 jsonMap.get("reply"),
                 jsonMap.get("address"),
                 jsonMap.get("issueDescription"),
-                previous_record_id
+                ""
+            );
+        } catch(JsonProcessingException err) {
+            System.out.println("Failed to parse response from ChatGPT: ".formatted(err.getMessage()));
+            err.printStackTrace();
+        }
+
+        return parsed;
+    }
+
+    private Bot2ParsedData parseResponseBot2(String responseString) {
+        Bot2ParsedData parsed = null;
+
+        try {
+            Map<String, String> jsonMap = mapper.readValue(responseString, Map.class);
+
+            parsed = new Bot2ParsedData(
+                jsonMap.get("category")
             );
         } catch(JsonProcessingException err) {
             System.out.println("Failed to parse response from ChatGPT: ".formatted(err.getMessage()));

@@ -1,35 +1,40 @@
 package com.byrdparkgeese.hackathonbackend.data.records;
 
-import jakarta.annotation.Nullable;
-
-public record ChatGptRequestBody(
+public record ChatGptRequestBody<T>(
     String model,
     Message[] input,
-    Text text
+    Text<T> text
 ) {
     public record Message(
         String role,
         String content
     ) {}
 
-    public record Text(
-        Format format
+    public record Text<T>(
+        Format<T> format
     ) {
-        public record Format(
+        public record Format<T>(
             String type,
             String name,
-            Schema schema
+            Schema<T> schema
         ) {
-            public record Schema(
+            public record Schema<T>(
                 String type,
-                Properties properties,
+                T properties,
                 String[] required,
                 Boolean additionalProperties
             ) {
-                public record Properties(
+                public record Bot1Properties(
                     Property reply,
                     Property address,
                     Property issueDescription
+                ) {
+                    public record Property(
+                        String type
+                    ) {}
+                }
+                public record Bot2Properties(
+                    Property category
                 ) {
                     public record Property(
                         String type
