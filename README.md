@@ -90,7 +90,7 @@ New RVA311 request submission is limited to:
   - potholes  
   - sidewalk issues
 
-Our automation of 311 submissions intentionally completes each step EXCEPT for the final submission, so that we do not generate bunk data for their system while testing or demoing our tool.
+Our automation of 311 submissions intentionally completes each step EXCEPT for the final submission, so that we do not generate bunk data for their system while testing or demoing our tool. Here is a screen recording of our app submitting a request to 311 automatically from a text message. We've set it up to cancel at the last moment so we don't create fake submissions: https://youtube.com/shorts/UlEnipXgEbw
 
 We built the framework to support submitting other types of request. With more time, we could easily build those out.
 
