@@ -70,7 +70,7 @@ public class TextHookController {
             return;
         }
 
-        GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(res.address());
+        GeocodingResponse geocodingResponse = geocodingService.getLatLongFromAddress(conversations.getAddress());
         conversations.setStatus("Closed");
         conversations.setLatitude(
                 String.valueOf(geocodingResponse.features().get(0).properties().lat())
