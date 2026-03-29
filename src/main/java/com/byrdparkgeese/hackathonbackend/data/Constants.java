@@ -76,7 +76,6 @@ public class Constants {
 
         If you do not have enough information to decide an address:
         - provide your reply to the user
-        - return address and issueDescription as empty strings
         - return address as an empty string
 
         If you do not have enough information to decide an issue description:
