@@ -81,8 +81,6 @@ public class TextHookController {
             optionsList.add("0");
             optionsList.add("0");
             optionsList.add("ArrowDown||Enter");
-        } else {
-            return;
         }
 
         axiomService.triggerAxiomHooks(optionsList);
